@@ -1,8 +1,11 @@
 package com.cst2335.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View mHeaderView = navigationView.getHeaderView(0);
+        Intent fromLogin = getIntent();
+        String input = fromLogin.getStringExtra("email");
+        TextView eEmail = mHeaderView.findViewById(R.id.textView);
+        eEmail.setText(input);
     }
 
     @Override
