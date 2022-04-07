@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //displays our emails
                 Snackbar.make(view, "Emails: muri0025@algonquinlive.com, wils0861@algonquinlive.com, alva0120@algonquinlive.com", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -76,30 +77,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //switch case to see which menu item is pressed
         switch(item.getItemId())
         {
             case R.id.action_help:
-                // Create the object of
-                // AlertDialog Builder class
+                // create alert dialog builder
                 AlertDialog.Builder builder
                         = new AlertDialog
                         .Builder(MainActivity.this);
 
-                // Set the message show for the Alert time
+                // put message in alert
                 builder.setMessage("This activity is the home where you can choose what activity you want to go to.Do you understand?");
 
-                // Set Alert Title
+                // title for alert
                 builder.setTitle("HELP");
 
-                // Set Cancelable false
-                // for when the user clicks on the outside
-                // the Dialog Box then it will remain show
+                //cancels when click outsid
                 builder.setCancelable(false);
 
-                // Set the positive button with yes name
-                // OnClickListener method is use of
-                // DialogInterface interface.
 
+                //just to makes buttons to press yes or no in the alert
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
@@ -107,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
 
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -117,12 +113,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
+                //display alert dialog
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 break;
 
             case R.id.action_Writter:
+                //crease toast message and displays it
                 Toast.makeText(getApplicationContext(), "This is the Home activity, made by Timothy Murillo, version 1.0", Toast.LENGTH_LONG)
                 .show();
                 break;
