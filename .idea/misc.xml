@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_favorite_shadow_24.xml" value="0.1375" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.1695" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
