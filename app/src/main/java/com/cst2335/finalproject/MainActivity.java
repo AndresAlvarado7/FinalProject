@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 //cancels when click outside
                 builder.setCancelable(false);
 
-
                 //just to makes buttons to press yes or no in the alert
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
