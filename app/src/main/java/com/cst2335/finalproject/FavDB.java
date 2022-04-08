@@ -9,13 +9,13 @@ import android.util.Log;
 
 public class FavDB  extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "AlbumsDB";
-    public static final int DB_VERSION = 1;
-    public static final String TABLE_NAME = "favoriteTable";
-    public static final String KEY_ID = "id";
-    public static final String ALBUM_TITLE = "albumTitle";
-    public static final String ALBUM_IMAGE = "albumImage";
-    public static final String FAVORITE_STATUS = "fStatus";
+    private static int DB_VERSION = 1;
+    private static String DATABASE_NAME = "AlbumsDB";
+    private static String TABLE_NAME = "favoriteTable";
+    public static String KEY_ID = "id";
+    public static String ALBUM_TITLE = "albumTitle";
+    public static String ALBUM_IMAGE = "albumImage";
+    public static String FAVORITE_STATUS = "fStatus";
 
     private static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
             + KEY_ID + " TEXT," + ALBUM_TITLE + " TEXT,"
@@ -57,7 +57,7 @@ public class FavDB  extends SQLiteOpenHelper {
         cv.put(KEY_ID, id);
         cv.put(FAVORITE_STATUS, fav_status);
         db.insert(TABLE_NAME,null, cv);
-        Log.d("FavDB Status", album_title + ", favstatus - "+fav_status+" - . " + cv);
+        Log.d("FavDB Status", album_title + ", fStatus - "+fav_status+" - . " + cv);
     }
 
     // read all data
