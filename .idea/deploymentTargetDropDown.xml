@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="$USER_HOME$/.android/avd/Nexus_4_API_27.avd" />
+            <value value="C:\Users\Lana\.android\avd\Nexus_4_API_27_oreo_9.1.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-04-03T16:47:24.528797Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-04-07T18:46:48.333593600Z" />
   </component>
 </project>
