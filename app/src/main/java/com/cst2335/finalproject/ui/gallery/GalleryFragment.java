@@ -1,10 +1,12 @@
 package com.cst2335.finalproject.ui.gallery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,9 +28,16 @@ public class GalleryFragment extends Fragment {
 
         final TextView textView = binding.textViewSearch;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        binding.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
-
-
     }
 
     @Override
