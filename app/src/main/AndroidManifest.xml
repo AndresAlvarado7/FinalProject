@@ -12,11 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".ui.gallery.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FinalProject.NoActionBar" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="true"
