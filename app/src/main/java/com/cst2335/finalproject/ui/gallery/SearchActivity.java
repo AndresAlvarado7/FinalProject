@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         albumList.setAdapter(adapter = new MyAdapter()); // setting adapter for list view
 
         MyTask req = new MyTask();
-        req.execute("https://musicbrainz.org/ws/2/release?artist=53b106e7-0cc6-42cc-ac95-ed8d30a3a98e&offset=0&limit=1&fmt=json");
+        req.execute("https://musicbrainz.org/ws/2/release?artist=53b106e7-0cc6-42cc-ac95-ed8d30a3a98e&offset=0&limit=7&fmt=json");
 
 
     }
@@ -61,14 +62,14 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         @Override
         public String doInBackground(String ... args) {
 
-            ArrayList<String> titles = new ArrayList<String>();
+            ArrayList<String> titles = new ArrayList<>();
 
             try {
                 URL url = new URL(args[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream response = connection.getInputStream();
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
@@ -155,6 +156,8 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
             txtView = row.findViewById(R.id.favTextView);
             txtView.setText(getItem(position).toString());
+
+
 
             return row;
         }
