@@ -87,12 +87,13 @@ public class MainActivity extends AppCompatActivity {
                         .Builder(MainActivity.this);
 
                 // put message in alert
-                builder.setMessage("This activity is the home where you can choose what activity you want to go to.Do you understand?");
+                builder.setMessage("1. Home - This activity will allow you see the other activities like search and library. 2. Search - This activity will display all the artist and allow you" +
+                        " to search for a certain artist. 3. Library - This will show the artists that you have put a heart on. Do you understand?");
 
                 // title for alert
                 builder.setTitle("HELP");
 
-                //cancels when click outsid
+                //cancels when click outside
                 builder.setCancelable(false);
 
 
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_Writter:
                 //crease toast message and displays it
-                Toast.makeText(getApplicationContext(), "This is the Home activity, made by Timothy Murillo, version 1.0", Toast.LENGTH_LONG)
+                Toast.makeText(getApplicationContext(), "This is the Main activity, made by Timothy Murillo,Lana Wilson ,Andres Alvardo version 1.0", Toast.LENGTH_LONG)
                 .show();
                 break;
 
