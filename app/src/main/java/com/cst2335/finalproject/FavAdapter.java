@@ -55,7 +55,8 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.favTextView.setText(favItemList.get(position).getItem_title());
-        holder.favImageView.setImageResource(favItemList.get(position).getItem_image());
+        //TODO here
+        //holder.favImageView.setImageResource(favItemList.get(position).getItem_image());
     }
 
     /**

@@ -67,7 +67,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         final AlbumItem albumItem = albumItems.get(position);
 
         readCursorData(albumItem, holder);
-        holder.imageView.setImageResource(albumItem.getImageResourse());
+        //holder.imageView.setImageResource(albumItem.getImageResourse());
         holder.titleTextView.setText(albumItem.getTitle());
     }
 
@@ -104,10 +104,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
                     AlbumItem albumItem = albumItems.get(position);
 
                     if (albumItem.getFavStatus().equals("0")) {
-
+                        // TODO here
                         albumItem.setFavStatus("1");
-                        favDB.insertIntoTheDatabase(albumItem.getTitle(), albumItem.getImageResourse(),
-                                albumItem.getKey_id(), albumItem.getFavStatus());
+                        //favDB.insertIntoTheDatabase(albumItem.getTitle(), albumItem.getFavStatus());
                         favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
                     } else {
                         albumItem.setFavStatus("0");
