@@ -39,7 +39,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:backgroundTint="#4CAF50"
-        android:text="songs"/>
+        android:text="@string/songBtn"/>
 
     <Button
         android:id="@+id/searchButton"
@@ -49,7 +49,7 @@
         android:layout_toStartOf="@+id/helpButton"
         android:layout_toEndOf="@+id/songsButton"
         android:backgroundTint="#4CAF50"
-        android:text="search" />
+        android:text="@string/searchBtn" />
 
     <Button
         android:id="@+id/helpButton"
@@ -58,7 +58,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:backgroundTint="#B51340"
-        android:text="help"/>
+        android:text="@string/helpBtn"/>
 
 
 

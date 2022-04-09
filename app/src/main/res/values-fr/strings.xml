@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">FinalProject</string>
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">En-tête de navigation</string>
+    <string name="action_settings">Réglages</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_search">Rechercher</string>
+    <string name="menu_library">bibliothèque musicale</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_sign_in">Connexion ou Inscription</string>
+    <string name="action_sign_in_short">S\'identifier</string>
+    <string name="welcome">"Bienvenue !"</string>
+    <string name="invalid_username">Nom d\'utilisateur non valide</string>
+    <string name="invalid_password">Le mot de passe doit contenir plus de 5 caractères</string>
+    <string name="login_failed">"Échec de la connexion"</string>
+
+    <string name="EmailAddress">Entrez votre adresse email:</string>
+    <string name="TypeEmail">Tapez l\'e-mail ici</string>
+    <string name="TypePassword">Saisissez votre mot de passe :</string>
+    <string name="ButtonText">CONNEXION</string>
+    <string name="profile">Votre profil</string>
+
+    <string name="textViewSearch">Rechercher</string>
+    <string name="editTextSearch">Nom de l\'artiste</string>
+    <string name="buttonSearch">Rechercher</string>
+
+    <string name="textViewAlbum">Album</string>
+
+    <string name="toast_messageRemoveFav">Album supprimé de la bibliothèque</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!--search related strings-->
+
+    <string name="toastResults">Résultats de recherche pour: </string>
+    <string name="songBtn">Chansons</string>
+    <string name="searchBtn">rechercher</string>
+    <string name="helpBtn">aider</string>
+    <string name="dialogTitle">Tutoriel sur l\'activité de recherche</string>
+    <string name="dialongBody">utilisez le texte d\'édition pour entrer le nom d\'un artiste, lorsque vous appuyez sur le bouton de recherche, l\'application appelle l\'API et recherche des albums.</string>
+    <string name="helpToast">Vous avez appuyé sur le bouton d\'aide :)</string>
+    <string name="favDialog">Ajouter aux Favoris?</string>
+    <string name="favYes">Oui</string>
+    <string name="favNo">Non</string>
+
+</resources>
