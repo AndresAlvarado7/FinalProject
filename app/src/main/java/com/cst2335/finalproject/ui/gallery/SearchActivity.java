@@ -82,7 +82,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         //initial search from fragment
 
         browseReq.execute("https://musicbrainz.org/ws/2/release?artist=" + artistId +"&offset=0&limit=25&fmt=json");
-        Toast.makeText(getApplicationContext(), "Search results for: " + searchFrag, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.toastResults) + searchFrag, Toast.LENGTH_LONG).show();
 
         binding.searchButton.setOnClickListener( click -> { // send button listener
 
@@ -101,7 +101,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
             new APIBrowseCall().execute("https://musicbrainz.org/ws/2/release?artist=" + id +"&offset=0&limit=25&fmt=json");
 
-            Snackbar snackbar = Snackbar.make(binding.getRoot(), "Search results for: " + binding.searchField.getText().toString(), Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), getString(R.string.toastResults) + binding.searchField.getText().toString(), Snackbar.LENGTH_LONG);
             snackbar.show();
 
             binding.searchField.setText("");
@@ -115,25 +115,25 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
         binding.helpButton.setOnClickListener( click -> { // send button listener
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Search Activity Tutorial");
-            alertDialogBuilder.setMessage("use the edit text to enter the name of an artist, when you press the search button the app will call the api and search for albums.");
+            alertDialogBuilder.setTitle(R.string.dialogTitle);
+            alertDialogBuilder.setMessage(R.string.dialongBody);
             alertDialogBuilder.create().show();
-            Toast.makeText(getApplicationContext(), "You pressed the help button :)", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.helpToast, Toast.LENGTH_LONG).show();
         });
 
 
         binding.listView.setOnItemLongClickListener( (p, b, pos, id) -> { // listener for message ListView
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Add to favourites?");
-            alertDialogBuilder.setPositiveButton("yes", (click, arg) -> {
+            alertDialogBuilder.setTitle(R.string.favDialog);
+            alertDialogBuilder.setPositiveButton(R.string.favYes, (click, arg) -> {
                 ContentValues cv = new ContentValues();
                 cv.put("albumTitle", adapter.getItem(pos).toString());
                 cv.put("fStatus", 1);
                 cv.put("artistId", "artist_id");
                 database.insert("favTable", null, cv);
             });
-            alertDialogBuilder.setNegativeButton("no", (click, arg) ->{ });
+            alertDialogBuilder.setNegativeButton(R.string.favNo, (click, arg) ->{ });
             alertDialogBuilder.create().show();
             return true;
         });
