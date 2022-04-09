@@ -39,12 +39,12 @@ public class SlideshowFragment extends Fragment {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-        //favDB.getInstance(binding.getRoot().getContext());
+        favDB = new FavDB(getContext());
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //loadData();
+        loadData();
 
 //        final TextView textView = binding.textSlideshow;
 //        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
