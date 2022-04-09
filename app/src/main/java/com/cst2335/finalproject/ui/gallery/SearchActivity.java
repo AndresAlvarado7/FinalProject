@@ -1,5 +1,6 @@
 package com.cst2335.finalproject.ui.gallery;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.cst2335.finalproject.AlbumItem;
+import com.cst2335.finalproject.FavDB;
 import com.cst2335.finalproject.R;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
     private MyAdapter adapter;
     private APIBrowseCall browseReq;
     private APISearchCall searchReq;
+    private FavDB favDB;
 
 
 
@@ -103,9 +106,24 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
             binding.searchField.setText("");
         });
 
+        binding.helpButton.setOnClickListener( click -> { // send button listener
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Search Activity Tutorial");
+            alertDialogBuilder.setMessage("use the edit text to enter the name of an artist, when you press the search button the app will call the api and search for albums.");
+            alertDialogBuilder.create().show();
+            Toast.makeText(getApplicationContext(), "You pressed the help button :)", Toast.LENGTH_LONG).show();
+        });
+
+
         binding.listView.setOnItemLongClickListener( (p, b, pos, id) -> { // listener for message ListView
-
-
+            SQLiteDatabase db = favDB.getReadableDatabase();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Add to favourites?");
+            alertDialogBuilder.setPositiveButton("yes", (click, arg) -> {
+               //db.insert()
+            });
+            alertDialogBuilder.setNegativeButton("no", (click, arg) ->{ });
+            alertDialogBuilder.create().show();
             return true;
         });
     }
@@ -227,20 +245,6 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
             binding.progBar.setProgress(50);
             Log.i("query", "DONE");
         }
-    }
-
-
-    private class Album{
-        private String title;
-
-        public Album(String title){
-            this.title = title;
-        }
-
-        public String getTitle(){
-            return title;
-        }
-
     }
 
     private class MyAdapter extends BaseAdapter {

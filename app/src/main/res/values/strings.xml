@@ -31,5 +31,7 @@
     <string name="buttonSearch">Search</string>
 
     <string name="textViewAlbum">Album</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
