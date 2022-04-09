@@ -17,8 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * It inflates the view hierarchy
+ * and creates an instance of the ViewHolder class
+ * initialized with the view hierarchy before
+ * returning it to the RecyclerView.
+ */
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
 
+    //crating variables, arrays and instances
     private final ArrayList<AlbumItem> albumItems;
     private final Context context;
     private FavDB favDB;
@@ -28,9 +35,16 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         this.context = context;
     }
 
+    /**
+     * This method inflates the layout we want to inflate
+     * @param parent context of a parent object
+     * @param viewType
+     * @return the view of the layout associated with the holder
+     */
     @NonNull
     @Override
     public  ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         favDB = new FavDB(context);
         //create table on first
         SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -44,20 +58,32 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         return new ViewHolder(view);
     }
 
+    /*
+     * This data is then displayed on the layout views using the references
+     * created in the constructor method of the ViewHolder class
+     * initializes a Row at the position in the data array
+     */
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
         final AlbumItem albumItem = albumItems.get(position);
 
         readCursorData(albumItem, holder);
-        holder.imageView.setImageResource(albumItem.getImageResourse());
+        //holder.imageView.setImageResource(albumItem.getImageResourse());
         holder.titleTextView.setText(albumItem.getTitle());
     }
 
+    /**
+     * count the all the items in the list
+     * @return return number of items in the list
+     */
     @Override
     public int getItemCount() {
         return albumItems.size();
     }
 
+    /**
+     * This class holds Albums views on a row:
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
@@ -79,10 +105,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
                     AlbumItem albumItem = albumItems.get(position);
 
                     if (albumItem.getFavStatus().equals("0")) {
-
+                        // TODO here
                         albumItem.setFavStatus("1");
-                        favDB.insertIntoTheDatabase(albumItem.getTitle(), albumItem.getImageResourse(),
-                                albumItem.getKey_id(), albumItem.getFavStatus());
+                        //favDB.insertIntoTheDatabase(albumItem.getTitle(), albumItem.getFavStatus());
                         favBtn.setBackgroundResource(R.drawable.ic_favorite_red_24);
                     } else {
                         albumItem.setFavStatus("0");

@@ -36,10 +36,10 @@ public class SlideshowFragment extends Fragment {
         SlideshowViewModel slideshowViewModel =
                 new ViewModelProvider(this).get(SlideshowViewModel.class);
 
-//        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-        favDB = new FavDB(getActivity());
+        favDB = new FavDB(getContext());
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -63,9 +63,7 @@ public class SlideshowFragment extends Fragment {
                 String title = cursor.getString(indexX);
                 int indexY = cursor.getColumnIndex(FavDB.KEY_ID);
                 String id = cursor.getString(indexY);
-                int indexZ = cursor.getColumnIndex(FavDB.ALBUM_IMAGE);
-                int image = Integer.parseInt(cursor.getString(indexZ));
-                FavItem favItem = new FavItem(title, id, image);
+                FavItem favItem = new FavItem(title, id);
                 favItemList.add(favItem);
             }
         } finally {
