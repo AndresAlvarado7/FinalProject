@@ -2,37 +2,24 @@ package com.cst2335.finalproject.ui.gallery;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import com.cst2335.finalproject.AlbumItem;
 import com.cst2335.finalproject.FavDB;
 import com.cst2335.finalproject.R;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.cst2335.finalproject.databinding.ActivityMainBinding;
 import com.cst2335.finalproject.databinding.ActivitySearchBinding;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -42,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.ExecutionException;
 
 
@@ -55,6 +42,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
     private APISearchCall searchReq;
     private FavDB favDB;
     private SQLiteDatabase database;
+    private String songId;
 
     @Override
     protected void onDestroy() {
@@ -74,16 +62,17 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         albumList.setAdapter(adapter = new MyAdapter()); // setting adapter for list view
         browseReq = new APIBrowseCall();
         searchReq = new APISearchCall();
-
+        songId = new String();
 
         favDB = new FavDB(this);
         database = favDB.getWritableDatabase();
 
 
-        String artistId = null;
+        String artistId = "";
         try {
             artistId = searchReq.execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + searchFrag + "&limit=1&fmt=json").get();
             Log.i("TEST", "TEST");
+            songId = artistId;
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -96,8 +85,8 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Search results for: " + searchFrag, Toast.LENGTH_LONG).show();
 
         binding.searchButton.setOnClickListener( click -> { // send button listener
-            String id = new String();
 
+            String id = new String();
             try {
                 id = new APISearchCall().execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + binding.searchField.getText().toString() + "&limit=1&fmt=json").get();
                 Log.i("TEST", "TEST");
@@ -107,6 +96,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            songId = id;
             list.clear();
 
             new APIBrowseCall().execute("https://musicbrainz.org/ws/2/release?artist=" + id +"&offset=0&limit=25&fmt=json");
@@ -115,6 +105,12 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
             snackbar.show();
 
             binding.searchField.setText("");
+        });
+
+        binding.songsButton.setOnClickListener(click -> { // send button listener
+            Intent intent = new Intent(this, SongActivity.class);
+            intent.putExtra("ARTIST", songId);
+            startActivity(intent);
         });
 
         binding.helpButton.setOnClickListener( click -> { // send button listener
