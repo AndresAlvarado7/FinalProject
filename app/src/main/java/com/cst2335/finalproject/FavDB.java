@@ -9,19 +9,22 @@ import android.util.Log;
 
 public class FavDB  extends SQLiteOpenHelper {
 
+    private static FavDB sInstance;
     private static int DB_VERSION = 1;
     private static String DATABASE_NAME = "AlbumsDB";
-    private static String TABLE_NAME = "favoriteTable";
+    private static String TABLE_NAME = "favTable";
     public static String KEY_ID = "id_";
     public static String ALBUM_TITLE = "albumTitle";
     public static String FAVORITE_STATUS = "fStatus";
     public static String ARTIST_ID = "artistId";
 
     private static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-            + KEY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + ALBUM_TITLE + " TEXT, "
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ALBUM_TITLE + " TEXT, "
             + FAVORITE_STATUS + " INTEGER, " + ARTIST_ID + " TEXT)";
 
-    public FavDB(Context context){ super(context,DATABASE_NAME,null,DB_VERSION);}
+    public FavDB (Context context){
+        super(context,DATABASE_NAME,null,DB_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
