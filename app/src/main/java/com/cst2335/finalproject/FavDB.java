@@ -19,17 +19,10 @@ public class FavDB  extends SQLiteOpenHelper {
     public static String ARTIST_ID = "artistId";
 
     private static String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-            + KEY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + ALBUM_TITLE + " TEXT, "
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ALBUM_TITLE + " TEXT, "
             + FAVORITE_STATUS + " INTEGER, " + ARTIST_ID + " TEXT)";
 
-    public static synchronized FavDB getInstance(Context context){
-        if (sInstance == null) {
-            sInstance = new FavDB(context.getApplicationContext());
-        }
-        return sInstance;
-    }
-
-    private FavDB (Context context){
+    public FavDB (Context context){
         super(context,DATABASE_NAME,null,DB_VERSION);
     }
 

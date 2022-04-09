@@ -29,14 +29,15 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_item,
                 parent, false);
-        favDB.getInstance(context);
+
+        favDB = new FavDB(view.getContext());
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.favTextView.setText(favItemList.get(position).getItem_title());
-        //TODO here
+        //what is this?
         //holder.favImageView.setImageResource(favItemList.get(position).getItem_image());
     }
 
