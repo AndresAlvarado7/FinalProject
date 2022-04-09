@@ -2,27 +2,19 @@ package com.cst2335.finalproject;
 
 public class AlbumItem {
 
-    private int imageResourse;
     private String title;
     private String key_id;
     private String favStatus;
+    private String artistId;
 
     public AlbumItem() {
     }
 
-    public AlbumItem(int imageResourse, String title, String key_id, String favStatus) {
-        this.imageResourse = imageResourse;
+    public AlbumItem( String title, String key_id, String favStatus, String artistId) {
         this.title = title;
         this.key_id = key_id;
         this.favStatus = favStatus;
-    }
-
-    public int getImageResourse() {
-        return imageResourse;
-    }
-
-    public void setImageResourse(int imageResourse) {
-        this.imageResourse = imageResourse;
+        this.artistId = artistId;
     }
 
     public String getTitle() {

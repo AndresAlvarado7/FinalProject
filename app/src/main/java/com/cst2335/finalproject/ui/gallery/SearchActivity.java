@@ -1,20 +1,35 @@
 package com.cst2335.finalproject.ui.gallery;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.cst2335.finalproject.AlbumItem;
 import com.cst2335.finalproject.R;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cst2335.finalproject.databinding.ActivityMainBinding;
 import com.cst2335.finalproject.databinding.ActivitySearchBinding;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -22,36 +37,80 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
     private ActivitySearchBinding binding;
-    private ArrayList<Album> list = new ArrayList<>();
+    private ArrayList<AlbumItem> list = new ArrayList<>();
     private MyAdapter adapter;
-    private MyOpener opener;
-    private SQLiteDatabase database;
-    private MyTask req;
+    private APIBrowseCall browseReq;
+    private APISearchCall searchReq;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
+        Intent fromSearchFrag = getIntent();
+        String searchFrag = fromSearchFrag.getStringExtra("SEARCH");
 
         ListView albumList = findViewById(R.id.listView); // ListView for containing messages
         albumList.setAdapter(adapter = new MyAdapter()); // setting adapter for list view
+        browseReq = new APIBrowseCall();
+        searchReq = new APISearchCall();
 
-        MyTask req = new MyTask();
-        req.execute("https://musicbrainz.org/ws/2/release?artist=53b106e7-0cc6-42cc-ac95-ed8d30a3a98e&offset=0&limit=1&fmt=json");
+        String artistId = null;
+        try {
+            artistId = searchReq.execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + searchFrag + "&limit=1&fmt=json").get();
+            Log.i("TEST", "TEST");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //initial search from fragment
+
+        browseReq.execute("https://musicbrainz.org/ws/2/release?artist=" + artistId +"&offset=0&limit=25&fmt=json");
+        Toast.makeText(getApplicationContext(), "Search results for: " + searchFrag, Toast.LENGTH_LONG).show();
+
+        binding.searchButton.setOnClickListener( click -> { // send button listener
+            String id = new String();
+
+            try {
+                id = new APISearchCall().execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + binding.searchField.getText().toString() + "&limit=1&fmt=json").get();
+                Log.i("TEST", "TEST");
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            list.clear();
+
+            new APIBrowseCall().execute("https://musicbrainz.org/ws/2/release?artist=" + id +"&offset=0&limit=25&fmt=json");
+
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), "Search results for: " + binding.searchField.getText().toString(), Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            binding.searchField.setText("");
+        });
+
+        binding.listView.setOnItemLongClickListener( (p, b, pos, id) -> { // listener for message ListView
 
 
+            return true;
+        });
     }
 
-    private class MyTask extends AsyncTask <String, ArrayList<String>, String> {
+    private class APIBrowseCall extends AsyncTask <String, ArrayList<String>, String> {
 
 
         public void onPreExecute(){
@@ -61,14 +120,14 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         @Override
         public String doInBackground(String ... args) {
 
-            ArrayList<String> titles = new ArrayList<String>();
+            ArrayList<String> titles = new ArrayList<>();
 
             try {
                 URL url = new URL(args[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream response = connection.getInputStream();
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
@@ -87,7 +146,6 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
                 this.publishProgress(titles);
 
-               //System.out.println(result);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -99,17 +157,78 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
             ArrayList<String> titles = values[0];
             for (int i = 0; i < titles.size(); i++){
                 String title = titles.get(i);
-                list.add(new Album(title));
+                list.add(new AlbumItem(title, "0", "0", "0"));
+                Log.d("query", "Added");
             }
             adapter.notifyDataSetChanged();
 
         }
 
         public void onPostExecute(String fromDoInBackground) {
-
+            binding.progBar.setProgress(100);
             Log.i("query", "DONE");
         }
     }
+
+
+    private class APISearchCall extends AsyncTask <String, String, String> {
+
+
+        public void onPreExecute(){
+
+        }
+
+        @Override
+        public String doInBackground(String ... args) {
+
+            String artId = new String();
+
+            try {
+                URL url = new URL(args[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream response = connection.getInputStream();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, StandardCharsets.UTF_8), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String result = sb.toString(); //result is the whole string
+                JSONObject uvReport = new JSONObject(result);
+
+                JSONArray arr = uvReport.getJSONArray("artists");
+                for (int i = 0; i < arr.length(); i++)
+                {
+                    artId = arr.getJSONObject(i).getString("id");
+                }
+
+                this.publishProgress("null");
+                //THIS IS REQUIRED TO NOT GET BLOCKED BY THE API
+                Thread.sleep(1500);
+
+
+
+                //System.out.println(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return artId;
+        }
+
+        public void onProgressUpdate(String ... values){
+            binding.progBar.setProgress(25);
+        }
+
+        public void onPostExecute(String fromDoInBackground) {
+            binding.progBar.setProgress(50);
+            Log.i("query", "DONE");
+        }
+    }
+
 
     private class Album{
         private String title;
@@ -148,13 +267,15 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
             //view type is dependant on which button user presses (see getItemViewType)
 
             if(old == null){
-                row = inflater.inflate(R.layout.fav_item, viewGroup, false);
+                row = inflater.inflate(R.layout.search_item, viewGroup, false);
             } else {
                 row = old;
             }
 
             txtView = row.findViewById(R.id.favTextView);
             txtView.setText(getItem(position).toString());
+
+
 
             return row;
         }
