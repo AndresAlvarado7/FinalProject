@@ -23,6 +23,7 @@ import com.cst2335.finalproject.AlbumItem;
 import com.cst2335.finalproject.R;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cst2335.finalproject.databinding.ActivityMainBinding;
 import com.cst2335.finalproject.databinding.ActivitySearchBinding;
@@ -68,6 +69,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         String artistId = null;
         try {
             artistId = searchReq.execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + searchFrag + "&limit=1&fmt=json").get();
+            Log.i("TEST", "TEST");
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -77,9 +79,35 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         //initial search from fragment
 
         browseReq.execute("https://musicbrainz.org/ws/2/release?artist=" + artistId +"&offset=0&limit=25&fmt=json");
-        binding.searchText.setText(artistId);
+        Toast.makeText(getApplicationContext(), "Search results for: " + searchFrag, Toast.LENGTH_LONG).show();
+
+        binding.searchButton.setOnClickListener( click -> { // send button listener
+            String id = new String();
+
+            try {
+                id = new APISearchCall().execute("https://musicbrainz.org/ws/2/artist/?query=artist:" + binding.searchField.getText().toString() + "&limit=1&fmt=json").get();
+                Log.i("TEST", "TEST");
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            list.clear();
+
+            new APIBrowseCall().execute("https://musicbrainz.org/ws/2/release?artist=" + id +"&offset=0&limit=25&fmt=json");
+
+            Snackbar snackbar = Snackbar.make(binding.getRoot(), "Search results for: " + binding.searchField.getText().toString(), Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            binding.searchField.setText("");
+        });
+
+        binding.listView.setOnItemLongClickListener( (p, b, pos, id) -> { // listener for message ListView
 
 
+            return true;
+        });
     }
 
     private class APIBrowseCall extends AsyncTask <String, ArrayList<String>, String> {
@@ -137,7 +165,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         }
 
         public void onPostExecute(String fromDoInBackground) {
-
+            binding.progBar.setProgress(100);
             Log.i("query", "DONE");
         }
     }
@@ -177,6 +205,7 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
                     artId = arr.getJSONObject(i).getString("id");
                 }
 
+                this.publishProgress("null");
                 //THIS IS REQUIRED TO NOT GET BLOCKED BY THE API
                 Thread.sleep(1500);
 
@@ -191,9 +220,11 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         }
 
         public void onProgressUpdate(String ... values){
+            binding.progBar.setProgress(25);
         }
 
         public void onPostExecute(String fromDoInBackground) {
+            binding.progBar.setProgress(50);
             Log.i("query", "DONE");
         }
     }
