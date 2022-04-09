@@ -63,9 +63,7 @@ public class SlideshowFragment extends Fragment {
                 String title = cursor.getString(indexX);
                 int indexY = cursor.getColumnIndex(FavDB.KEY_ID);
                 String id = cursor.getString(indexY);
-                int indexZ = cursor.getColumnIndex(FavDB.ALBUM_IMAGE);
-                int image = Integer.parseInt(cursor.getString(indexZ));
-                FavItem favItem = new FavItem(title, id, image);
+                FavItem favItem = new FavItem(title, id);
                 favItemList.add(favItem);
             }
         } finally {
