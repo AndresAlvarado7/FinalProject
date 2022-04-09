@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -53,8 +54,13 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
     private APIBrowseCall browseReq;
     private APISearchCall searchReq;
     private FavDB favDB;
+    private SQLiteDatabase database;
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        favDB.close();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,11 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
         albumList.setAdapter(adapter = new MyAdapter()); // setting adapter for list view
         browseReq = new APIBrowseCall();
         searchReq = new APISearchCall();
+
+
+        favDB = new FavDB(this);
+        database = favDB.getWritableDatabase();
+
 
         String artistId = null;
         try {
@@ -116,11 +127,15 @@ public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
 
         binding.listView.setOnItemLongClickListener( (p, b, pos, id) -> { // listener for message ListView
-            SQLiteDatabase db = favDB.getReadableDatabase();
+
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("Add to favourites?");
             alertDialogBuilder.setPositiveButton("yes", (click, arg) -> {
-               //db.insert()
+                ContentValues cv = new ContentValues();
+                cv.put("albumTitle", adapter.getItem(pos).toString());
+                cv.put("fStatus", 1);
+                cv.put("artistId", "artist_id");
+                database.insert("favTable", null, cv);
             });
             alertDialogBuilder.setNegativeButton("no", (click, arg) ->{ });
             alertDialogBuilder.create().show();
