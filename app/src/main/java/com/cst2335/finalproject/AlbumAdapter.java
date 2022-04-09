@@ -44,7 +44,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     @NonNull
     @Override
     public  ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        favDB = new FavDB(context);
+        favDB.getInstance(context);
         //create table on first
         SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
         boolean firstStart = prefs.getBoolean("firstStart", true);

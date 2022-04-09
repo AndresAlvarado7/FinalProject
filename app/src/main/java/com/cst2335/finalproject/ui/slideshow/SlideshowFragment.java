@@ -36,15 +36,15 @@ public class SlideshowFragment extends Fragment {
         SlideshowViewModel slideshowViewModel =
                 new ViewModelProvider(this).get(SlideshowViewModel.class);
 
-//        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-        favDB = new FavDB(getActivity());
+        //favDB.getInstance(binding.getRoot().getContext());
         recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        loadData();
+        //loadData();
 
 //        final TextView textView = binding.textSlideshow;
 //        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

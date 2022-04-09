@@ -43,7 +43,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fav_item,
                 parent, false);
-        favDB = new FavDB(context);
+        favDB.getInstance(context);
         return new ViewHolder(view);
     }
 
