@@ -45,39 +45,12 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        loadData();
 
 //        final TextView textView = binding.textSlideshow;
 //        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
-    //loads all songs that are favourite
-    private void loadData() {
-        if (favItemList != null) {
-            favItemList.clear();
-        }
-        SQLiteDatabase db = favDB.getReadableDatabase();
-        Cursor cursor = favDB.select_all_favorite_list();
-        try {
-            while (cursor.moveToNext()) {
-                int indexX = cursor.getColumnIndex(FavDB.ALBUM_TITLE);
-                String title = cursor.getString(indexX);
-                int indexY = cursor.getColumnIndex(FavDB.KEY_ID);
-                String id = cursor.getString(indexY);
-                int indexZ = cursor.getColumnIndex(FavDB.ALBUM_IMAGE);
-                int image = Integer.parseInt(cursor.getString(indexZ));
-                FavItem favItem = new FavItem(title, id, image);
-                favItemList.add(favItem);
-            }
-        } finally {
-            if (cursor != null && cursor.isClosed())
-                cursor.close();
-            db.close();
-        }
 
-        favAdapter = new FavAdapter(getActivity(), favItemList);
-        recyclerView.setAdapter(favAdapter);
-    }
 
     @Override
     public void onDestroyView() {

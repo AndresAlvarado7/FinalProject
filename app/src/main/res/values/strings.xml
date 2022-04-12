@@ -36,6 +36,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="written">Written by</string>
+    <string name="help">Help</string>
+
     <!--search related strings-->
 
     <string name="toastResults">Search results for: </string>

@@ -1,5 +1,6 @@
 package com.cst2335.finalproject;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +28,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cst2335.finalproject.databinding.ActivityMainBinding;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+
+//    private ProgressBar pb;
+//    int counter =0;
+//    private Button btn;
+//    private ProgressDialog loading;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +77,38 @@ public class MainActivity extends AppCompatActivity {
         String input = fromLogin.getStringExtra("email");
         TextView eEmail = mHeaderView.findViewById(R.id.textView);
         eEmail.setText(input);
-    }
 
+//        loading = new ProgressDialog(this);
+//        //prog();
+//        btn = (Button) findViewById(R.id.Load_songs);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                loading.setTitle("Welcome");
+//                loading.setMessage("Songs have been loaded, you can click off");
+//                loading.setCanceledOnTouchOutside(true);
+//                loading.show();
+//            }
+//        });
+    }
+//   runs progress bar on timer
+//    public void prog(){
+//        pb = (ProgressBar) findViewById(R.id.pb);
+//
+//        final Timer t= new Timer();
+//        TimerTask tt = new TimerTask(){
+//            @Override
+//            public void run(){
+//                counter++;
+//                pb.setProgress(counter);
+//
+//                if(counter ==100){
+//                    t.cancel();
+//                }
+//            }
+//        };
+//        t.schedule(tt, 0,100);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
