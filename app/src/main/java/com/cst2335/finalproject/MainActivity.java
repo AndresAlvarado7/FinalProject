@@ -1,15 +1,24 @@
 package com.cst2335.finalproject;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,11 +28,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cst2335.finalproject.databinding.ActivityMainBinding;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
+//    private ProgressBar pb;
+//    int counter =0;
+//    private Button btn;
+//    private ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //displays our emails
+                Snackbar.make(view, "Emails: muri0025@algonquinlive.com, wils0861@algonquinlive.com, alva0120@algonquinlive.com", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -58,13 +76,97 @@ public class MainActivity extends AppCompatActivity {
         String input = fromLogin.getStringExtra("email");
         TextView eEmail = mHeaderView.findViewById(R.id.textView);
         eEmail.setText(input);
-    }
 
+//        loading = new ProgressDialog(this);
+//        //prog();
+//        btn = (Button) findViewById(R.id.Load_songs);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                loading.setTitle("Welcome");
+//                loading.setMessage("Songs have been loaded, you can click off");
+//                loading.setCanceledOnTouchOutside(true);
+//                loading.show();
+//            }
+//        });
+    }
+//   runs progress bar on timer
+//    public void prog(){
+//        pb = (ProgressBar) findViewById(R.id.pb);
+//
+//        final Timer t= new Timer();
+//        TimerTask tt = new TimerTask(){
+//            @Override
+//            public void run(){
+//                counter++;
+//                pb.setProgress(counter);
+//
+//                if(counter ==100){
+//                    t.cancel();
+//                }
+//            }
+//        };
+//        t.schedule(tt, 0,100);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //switch case to see which menu item is pressed
+        switch(item.getItemId())
+        {
+            case R.id.action_help:
+                // create alert dialog builder
+                AlertDialog.Builder builder
+                        = new AlertDialog
+                        .Builder(MainActivity.this);
+
+                // put message in alert
+                builder.setMessage("1. Home - This activity will allow you see the other activities like search and library." +
+                        " 2. Search - This activity will display all the artist and allow you to search for a certain artist. " +
+                        "3. Library - This will show the artists that you have put a heart on. Do you understand?");
+
+                // title for alert
+                builder.setTitle("HELP");
+
+                //cancels when click outside
+                builder.setCancelable(false);
+
+                //just to makes buttons to press yes or no in the alert
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                });
+
+                //display alert dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                break;
+
+            case R.id.action_Writter:
+                //crease toast message and displays it
+                Toast.makeText(getApplicationContext(), "This is the Main activity, made by Timothy Murillo, Lana Wilson, Andres Alvarado, version 1.0", Toast.LENGTH_LONG)
+                .show();
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
