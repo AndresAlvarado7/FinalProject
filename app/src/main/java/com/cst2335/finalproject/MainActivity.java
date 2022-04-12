@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 //    private Button btn;
 //    private ProgressDialog loading;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
