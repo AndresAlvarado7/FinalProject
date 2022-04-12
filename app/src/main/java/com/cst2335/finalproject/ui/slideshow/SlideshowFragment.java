@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +39,14 @@ public class SlideshowFragment extends Fragment {
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+
+        binding.helpButtonLibrary.setOnClickListener( click -> { // help button listener
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setTitle(R.string.helpLibraryTitle);
+            alertDialogBuilder.setMessage(R.string.helpLibraryBody);
+            alertDialogBuilder.setNeutralButton("OK", (dialog, click1)->{});
+            alertDialogBuilder.show();
+        });
 
         favDB = new FavDB(getContext());
         recyclerView = root.findViewById(R.id.recyclerView);
