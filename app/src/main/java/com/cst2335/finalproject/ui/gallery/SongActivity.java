@@ -29,6 +29,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+/**
+ * @author Lana Wilson
+ */
 public class SongActivity extends AppCompatActivity {
 
     private ActivitySongBinding binding;

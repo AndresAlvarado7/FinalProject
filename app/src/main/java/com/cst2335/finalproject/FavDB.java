@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * @author Lana Wilson and Andres
+ */
 public class FavDB  extends SQLiteOpenHelper {
 
     private static FavDB sInstance;

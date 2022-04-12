@@ -32,7 +32,12 @@ import java.util.ArrayList;
 
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ *
+ * @param <MyOpener>
+ * @param <MyListAdapter>
+ * @author Lana Wilson
+ */
 public class SearchActivity<MyOpener, MyListAdapter> extends AppCompatActivity {
 
     private ActivitySearchBinding binding;

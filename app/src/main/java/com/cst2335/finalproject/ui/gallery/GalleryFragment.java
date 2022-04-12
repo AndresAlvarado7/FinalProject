@@ -15,6 +15,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cst2335.finalproject.databinding.FragmentGalleryBinding;
 
+/**
+ * @author Lana Wilson
+ */
 public class GalleryFragment extends Fragment {
 
     private FragmentGalleryBinding binding;
