@@ -1,6 +1,9 @@
 package com.cst2335.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,25 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder>{
                 parent, false);
 
         favDB = new FavDB(view.getContext());
+
+        //go through the list to get album title and id of each element of the list
+        Cursor cursor = favDB.select_all_favorite_list();
+        while (cursor.moveToNext()) {
+            int indexX = cursor.getColumnIndex(FavDB.ALBUM_TITLE);
+            String title = cursor.getString(indexX);
+            int indexY = cursor.getColumnIndex(FavDB.KEY_ID);
+            String id = cursor.getString(indexY);
+            FavItem favItem = new FavItem(title, id);
+//            favItemList.add(favItem);
+
+            //setting a clickListener to each item in the list
+            view.setOnClickListener((b) -> { //
+                Uri uri = Uri.parse("https://www.google.com/search?q="+favItem.getItem_title());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                context.startActivity(intent);
+            });
+        }
+        cursor.close();
         return new ViewHolder(view);
     }
 
